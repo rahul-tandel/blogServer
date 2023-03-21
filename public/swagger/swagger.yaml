@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: API documentation for Blog
+  description: This is a documentation foe blog application.
+  version: 1.0.5
+servers:
+  - url: localhost:3000
+tags:
+  - name: blogs
+    description: Here lies all the operation related to blog
+  - name: users
+    description: Here lies all the opearation related to user
+paths:
+  /user:
+    get:
+      tags:
+        - users
+      summary: To get all the Users from the store
+      description: Get all the users in the store
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: Cannot Get Users
+    post:
+      tags:
+        - users
+      summary: When users creates a account
+      description: When users creates a account/Signup
+      requestBody:
+        description: POST the user data in store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: Insufficient Data
+  /user/{id}:
+    get:
+      tags:
+        - users
+      summary: Get users data from store using ID
+      description: Get users data using I
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Users id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: User not found
+    put:
+      tags:
+        - users
+      summary: Update User
+      description: Update user data using ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Users ID
+          schema:
+            type: string
+      requestBody:
+        description: Users updated body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: User not found
+  /user/login:
+    post:
+      tags:
+        - users
+      summary: user Authentication
+      description: Authenticate user
+      requestBody:
+        description: User Credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+  /user/blog:
+    post:
+      tags:
+        - blogs
+      summary: Post Blogs
+      description: Post Blogs
+      requestBody:
+        description: BLog Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blogs'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blogs'
+        '400':
+          description: Something went wrong
+  /user/blog/{user_id}:
+    get:
+      tags:
+        - blogs
+      summary: Get blogs of the user
+      description: Get the blogs of a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blogs'
+        '400':
+          description: User not found
+components:
+  schemas:
+    Users:
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Ramesh
+        username:
+          type: string
+          example: rameshbro
+        email:
+          type: string
+          example: ramesh@gmail.com
+        phone:
+          type: string
+          example: 75435443
+          nullable: false
+        profilePic:
+          type: string
+          example: string
+        banner:
+          type: string
+          example: base64 url
+    Blogs:
+      properties:
+        id:
+          type: string
+          example: 1
+        user_id:
+          type: string
+          example: 2
+        title:
+          type: string
+          example: title
+        blogImage:
+          type: string
+          example: someBlogUrl
+        content:
+          type: string
+          example: content of the blog
