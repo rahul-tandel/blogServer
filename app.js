@@ -32,6 +32,14 @@ app.get('/health-check', (req, res) => {
   })
 })
 
+app.get('/', (req, res) => {
+  res.send({
+    env: process.env['NODE_ENV'],
+    name: 'blog',
+    healthy: true
+  })
+})
+
 app.get('/syncDb', async (req, res) => {
   if (process.env.NODE_ENV === 'development') {
     await db.sequelize.sync({
